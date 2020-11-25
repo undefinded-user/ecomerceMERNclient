@@ -2,33 +2,30 @@ import React, { useState } from 'react'
 
 import { auth } from '../../firebase.js'
 
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+
 const Register = () => {
 	const [email, setEmail] = useState('');
 	const [errors, setError] = useState([]);
 
 	const handleSubmit =  async (e) => {
 		e.preventDefault();
+		console.log(process.env.REACT_APP_REGISTER_REDIRECT_URL)
 		const actionCodeSettings = {
 		  // URL you want to redirect back to. The domain (www.example.com) for this
 		  // URL must be in the authorized domains list in the Firebase Console.
-		  url: 'https://localhost:3000/register/finish',
+		  url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
 		  // This must be true.
 		  handleCodeInApp: true
 		}
 
 		try {
-			console.log(1)
 			await auth.sendSignInLinkToEmail(email, actionCodeSettings)
-			toast(`Email is sent to ${email}. Click to complete your registration.`)
-			console.log(2)
+			toast.success(`Email is sent to ${email}. Click to complete your registration.`)
 			// Save the email locally so you don't need to ask the user for it again
 			window.localStorage.setItem('emailForSignIn', email);
 			setEmail('')
 		} catch (error) {
 			setError([...errors, error])
-			console.log(error)
 		}
 		
 	}
@@ -63,7 +60,6 @@ const Register = () => {
 			<div className='row'>
 				<div className='col-md-6 offset-md-3'>
 					<h1>Register</h1>
-					< ToastContainer />
 					{registerForm()}
 				</div>
 			</div>
