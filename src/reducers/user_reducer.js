@@ -1,6 +1,6 @@
-export cosnt userReducer = (state={name: 'Bogdan'}, action) =>{
+export const userReducer = (state={}, action) =>{
 	switch(action.type) {
-		case 'LOGGEDIN_USER':{
+		case 'LOGGED_IN_USER':{
 			return {...state, ...action.payload}
 		}
 		case 'LOGOUT':{
