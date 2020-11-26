@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 import { auth } from '../../firebase.js'
 
@@ -10,6 +11,8 @@ const RegisterComplete = ({ history }) => {
 	const [errors, setError] = useState([]);
 	const [isEmailFilled, setIsEmailFilled] = useState(window.localStorage.getItem('emailForSignIn'))
 	
+	const user = useSelector((state)=>state.user)
+
 	const isPasswordValid = () => {
 		
 		return (
@@ -23,6 +26,7 @@ const RegisterComplete = ({ history }) => {
 	}
 
 	useEffect(()=>{
+		user&&user.token&&history.push('/')
 		// Get the email if available. This should be available if the user completes
 		// the flow on the same device where they started it.
 		setEmail(window.localStorage.getItem('emailForSignIn'));
@@ -31,7 +35,7 @@ const RegisterComplete = ({ history }) => {
 		    // attacks, ask the user to provide the associated email again. For example:
 	    	toast.info('Please provide your email for confirmation');
 	  	}
-	}, [])
+	}, [user])
 	
 
 	const handleSubmit = async (e) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { Button } from 'antd'
@@ -12,6 +12,10 @@ const ForgotPassword = ({ history }) => {
 	const [email, setEmail] = useState('')
 	const [isLoading, setIsLoading] = useState('')
  	const user = useSelector((state) => state.user)
+
+ 	useEffect(()=>{
+ 		user&&user.token&&history.push('/')
+ 	}, [user])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -59,7 +63,6 @@ const ForgotPassword = ({ history }) => {
 
 	return(
 		<div clasName='container'>
-			{user&&history.push('/')}
 			<div className='row p-5'>
 				<div className='col-md-6 offset-md-3'>
 					{isLoading? <h4>Loading<LoadingOutlined /></h4> : <h4>Forgot password</h4>}

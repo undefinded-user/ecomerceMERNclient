@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { auth, googleAuthProvider } from '../../firebase.js'
 
 import { toast } from 'react-toastify'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Button } from 'antd'
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons'
@@ -17,6 +17,11 @@ const Login = ({history}) => {
 	const [errors, setError] = useState([]);
 
 	const dispatch = useDispatch()
+	const user = useSelector((state) => state.user)
+
+	useEffect(()=>{
+		user&&user.token&&history.push('/')
+	}, [user])
 
 	const isFormValid = () => {
 		return email&&password.length>5
