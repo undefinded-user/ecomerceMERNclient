@@ -4,7 +4,7 @@ import { auth } from '../../firebase.js'
 
 import { toast } from 'react-toastify'
 
-const Register = () => {
+const Register = ({history}) => {
 	const [email, setEmail] = useState('');
 	const [errors, setError] = useState([]);
 
@@ -25,14 +25,12 @@ const Register = () => {
 			window.localStorage.setItem('emailForSignIn', email);
 			setEmail('')
 		} catch (error) {
+			console.log(error)
 			setError([...errors, error])
+			toast.error(error.message)
+			history.push('/login')
 		}
 		
-	}
-
-	const handleChange = (e) => {
-		const { value } = e.target
-		setEmail(value)
 	}
 
 	const registerForm = () => {
@@ -44,7 +42,7 @@ const Register = () => {
 					className='form-control' 
 					id='email'
 					value={email}
-					onChange={handleChange}
+					onChange={(e) => setEmail(e.target.value)}
 					placeholder='Email'
 					autoFocus
 				/>
