@@ -1,20 +1,41 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
+import { auth } from '../../../firebase.js'
 import { Menu } from 'antd';
-import { WindowsOutlined, UserAddOutlined, UserOutlined, SettingOutlined,  } from '@ant-design/icons';
+import {
+  WindowsOutlined,
+  UserAddOutlined, 
+  UserOutlined, 
+  SettingOutlined,
+  LogoutOutlined  
+} from '@ant-design/icons';
+
 
 const { SubMenu, Item } = Menu
 
+
 const Header = () => {
-	const [current, setCurrent] = useState('home');
+	const [current, setCurrent] = useState('');
+
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const state = useSelector((state) => state)
 
 	const handleClick = (e) => {
     const { key } = e
-    console.log(key)
     setCurrent(key)
 	}
 
+  const logout = () => {
+    auth.signOut()
+    dispatch({
+      type: 'LOGOUT',
+      payload: null
+    })
+    history.push('/login')
+  }
 
 	return (
 
@@ -37,6 +58,9 @@ const Header = () => {
         <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Register">
             <Item key="setting:1">Option 1</Item>
             <Item key="setting:2">Option 2</Item>
+            <Item icon={<LogoutOutlined />}
+                  key="logout"
+                  onClick={logout}>Logout</Item>
         </SubMenu>
       </Menu>
 
