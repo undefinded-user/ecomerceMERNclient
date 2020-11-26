@@ -4,7 +4,7 @@ export const userReducer = (state={}, action) =>{
 			return {...state, ...action.payload}
 		}
 		case 'LOGOUT':{
-			return {...state, ...action.payload}
+			return action.payload
 		}
 		default:{
 			return state 
