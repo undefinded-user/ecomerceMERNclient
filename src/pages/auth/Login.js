@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { auth, googleAuthProvider } from '../../firebase.js'
 
@@ -119,6 +120,9 @@ const Login = ({history}) => {
 					>
 							Login with Google
 					</Button>
+					<Link to='forgot/password' className='float-right text-danger' >
+						Forgot password
+					</Link>
 				</div>			
 			</form>
 		)  	
