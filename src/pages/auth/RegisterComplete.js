@@ -8,7 +8,7 @@ const RegisterComplete = ({ history }) => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [errors, setError] = useState([]);
-	const [isEmailFilled, setIsEmailFilled] = useState(!window.localStorage.getItem('emailForSignIn'))
+	const [isEmailFilled, setIsEmailFilled] = useState(window.localStorage.getItem('emailForSignIn'))
 	
 	const isPasswordValid = () => {
 		
@@ -86,16 +86,18 @@ const RegisterComplete = ({ history }) => {
 					value={email}
 					onChange={(e) =>setEmail(e.target.value)}
 					placeholder='Email'
-					disabled
+					disabled={isEmailFilled}
+					autoFocus={!isEmailFilled}
 				/>
 				<br />
+				{console.log(!isEmailFilled)}
 				<input 
 					type='password'
 					className='form-control' 
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 					placeholder='Password'
-					autoFocus
+					autoFocus={isEmailFilled}
 				/>
 				<input 
 					type='password'
