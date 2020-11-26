@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 
 import { auth } from '../../firebase.js'
 
+import { toast } from 'react-toastify'
 
 const Register = () => {
 	const [email, setEmail] = useState('');
 	const [errors, setError] = useState([]);
 
 	const handleSubmit =  async (e) => {
-		e.preventDefault();
-		console.log(process.env.REACT_APP_REGISTER_REDIRECT_URL)
+		e.preventDefault()
 		const actionCodeSettings = {
 		  // URL you want to redirect back to. The domain (www.example.com) for this
 		  // URL must be in the authorized domains list in the Firebase Console.
