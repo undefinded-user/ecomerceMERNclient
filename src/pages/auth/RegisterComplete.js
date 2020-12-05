@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { auth } from '../../firebase.js'
 
 import { toast } from 'react-toastify'
+
+const axios = require('axios')
+
 const RegisterComplete = ({ history }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -12,6 +15,7 @@ const RegisterComplete = ({ history }) => {
 	const [isEmailFilled, setIsEmailFilled] = useState(window.localStorage.getItem('emailForSignIn'))
 	
 	const user = useSelector((state)=>state.user)
+	const dispatch = useDispatch()
 
 	const isPasswordValid = () => {
 		
@@ -26,17 +30,22 @@ const RegisterComplete = ({ history }) => {
 	}
 
 	useEffect(()=>{
+		// redirection to home page if user is logged in
 		user&&user.token&&history.push('/')
 		// Get the email if available. This should be available if the user completes
 		// the flow on the same device where they started it.
-		setEmail(window.localStorage.getItem('emailForSignIn'));
-	 	if (!window.localStorage.getItem('emailForSignIn')) {
+	 	
+	}, [user])
+	
+	useEffect(()=>{
+		if (!isEmailFilled) {
 		    // User opened the link on a different device. To prevent session fixation
 		    // attacks, ask the user to provide the associated email again. For example:
 	    	toast.info('Please provide your email for confirmation');
+	  	} else {
+	  		setEmail(window.localStorage.getItem('emailForSignIn'))
 	  	}
-	}, [user])
-	
+	}, [])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -55,10 +64,26 @@ const RegisterComplete = ({ history }) => {
 			    		window.localStorage.removeItem('emailForSignIn')
 				    	let user = auth.currentUser
 				    	await user.updatePassword(password)
-				    	const userIdToken = await user.getIdTokenResult()
-				    	console.log('user', user, 'idTokenResult', userIdToken)
+				    	const idTokenResult = await user.getIdTokenResult()
+				    	console.log('user', user, 'idTokenResult', idTokenResult)
 				    	// redux store
+				    	const res = await axios.post(`${process.env.REACT_APP_API}/create-update-user`, {}, {
+							headers: {
+								authtoken: idTokenResult.token
+							}
+						})
 
+						dispatch({
+							type: 'LOGGED_IN_USER',
+							payload: {
+								name: res.data.name,
+								email: res.data.email,
+								token: idTokenResult.token,
+								role: res.data.role,
+								_id: res.data._id
+							}					
+							
+						})
 				    	// redirect
 				    	history.push('/')
 			    	}

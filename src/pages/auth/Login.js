@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'antd'
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons'
 
+const axios = require('axios')
+
 const Login = ({history}) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -38,13 +40,21 @@ const Login = ({history}) => {
 				if(result.user){
 					const { user } = result
 					const idTokenResult = await user.getIdTokenResult()
-					console.log(idTokenResult)
 					// save user to redux store
+					const res = await axios.post(`${process.env.REACT_APP_API}/create-update-user`, {}, {
+						headers: {
+							authtoken: idTokenResult.token
+						}
+					}) 
+
 					dispatch({
 						type: 'LOGGED_IN_USER',
 						payload: {
-							email: user.email,
-							token : idTokenResult.token
+							name: res.data.name,
+							email: res.data.email,
+							token: idTokenResult.token,
+							role: res.data.role,
+							_id: res.data._id
 						}
 						
 						
@@ -69,13 +79,23 @@ const Login = ({history}) => {
 			const result = await auth.signInWithPopup(googleAuthProvider)
 			const { user } = result
 			const idTokenResult = await user.getIdTokenResult()
+			const res = await axios.post(`${process.env.REACT_APP_API}/create-update-user`, {}, {
+				headers: {
+					authtoken: idTokenResult.token
+				}
+			})
+
 			dispatch({
 				type: 'LOGGED_IN_USER',
 				payload: {
-					email: user.email,
-					token: idTokenResult.token
+					name: res.data.name,
+					email: res.data.email,
+					token: idTokenResult.token,
+					role: res.data.role,
+					_id: res.data._id
 				}
 			})
+				
 			history.push('/')
 		} catch (error) {
 			toast.error(error.message)
