@@ -5,8 +5,6 @@ import { auth } from '../../firebase.js'
 
 import { toast } from 'react-toastify'
 
-const axios = require('axios')
-
 const RegisterComplete = ({ history }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -67,22 +65,11 @@ const RegisterComplete = ({ history }) => {
 				    	const idTokenResult = await user.getIdTokenResult()
 				    	console.log('user', user, 'idTokenResult', idTokenResult)
 				    	// redux store
-				    	const res = await axios.post(`${process.env.REACT_APP_API}/create-update-user`, {}, {
-							headers: {
-								authtoken: idTokenResult.token
-							}
-						})
-
-						dispatch({
-							type: 'LOGGED_IN_USER',
+				    	dispatch({
+							type: 'LOGGED_IN_USER_SAGA',
 							payload: {
-								name: res.data.name,
-								email: res.data.email,
 								token: idTokenResult.token,
-								role: res.data.role,
-								_id: res.data._id
-							}					
-							
+							}						
 						})
 				    	// redirect
 				    	history.push('/')
