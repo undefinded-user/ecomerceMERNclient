@@ -1,8 +1,8 @@
 import axios from 'axios'
-
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 
 function* userLoggedInSaga(action) {
+	const { history } = action.payload
 	
 	const res = yield axios.post(`${process.env.REACT_APP_API}/create-update-user`, {}, {
 		headers: {
@@ -21,6 +21,10 @@ function* userLoggedInSaga(action) {
 						
 
 	yield put({type:'LOGGED_IN_USER', payload})
+	// role based redirection 
+	res.data.role === 'admin'?
+		history.push('/admin/dashboard'):
+		history.push('/user/history')
 }
 
 export function* watchUserLoggedIn () {

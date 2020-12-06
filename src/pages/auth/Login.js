@@ -23,6 +23,7 @@ const Login = ({history}) => {
 		user&&user.token&&history.push('/')
 	}, [user])
 
+	//simple client side validation
 	const isFormValid = () => {
 		return email&&password.length>5
 	}
@@ -43,11 +44,10 @@ const Login = ({history}) => {
 						type: 'LOGGED_IN_USER_SAGA',
 						payload: {
 							token: idTokenResult.token,
+							history
 						}
 						
 					})
-					// redirect to home page
-					history.push('/')
 				}
 			} catch (error) {
 				//display error from firebase
@@ -70,10 +70,9 @@ const Login = ({history}) => {
 				type: 'LOGGED_IN_USER_SAGA',
 				payload: {
 					token: idTokenResult.token,
+					history
 				}
 			})
-				
-			history.push('/')
 		} catch (error) {
 			toast.error(error.message)
 		}
