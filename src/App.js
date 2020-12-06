@@ -23,9 +23,8 @@ function App() {
       if(user){
         const idTokenResult = await user.getIdTokenResult()
         dispatch({
-          type: 'LOGGED_IN_USER',
+          type: 'GET_LOGGED_IN_USER_SAGA',
           payload: {
-            email : user.email,
             token : idTokenResult.token
           }
         })
