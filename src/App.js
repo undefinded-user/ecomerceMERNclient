@@ -14,6 +14,8 @@ import RegisterComplete from './pages/auth/RegisterComplete.js'
 import ForgotPassword from './pages/auth/ForgotPassword.js'
 import Header from './components/nav/Header'
 import History from './pages/user/History'
+import WishList from './pages/user/WishList'
+import PasswordUpdate from './pages/user/PasswordUpdate'
 import UserRoute from './components/routes/UserRoute'
 
  
@@ -46,6 +48,12 @@ function App() {
         <Route exact path='/forgot/password' component={ForgotPassword}/>
         <UserRoute exact path='/user/history'>
             <History />
+        </UserRoute>
+        <UserRoute exact path='/user/password'>
+            <PasswordUpdate />  
+        </UserRoute>
+        <UserRoute exact path='/user/wishlist'>
+            <WishList />
         </UserRoute>
       </Switch>
     </>
