@@ -45,6 +45,11 @@ const Header = () => {
             Home
           </Link>
         </Item>
+         <Item key="admin" icon={<WindowsOutlined />}>
+          <Link to='/admin/dashboard'>
+            admin
+          </Link>
+        </Item>
         {!user&&
                 <Item key="register" icon={<UserAddOutlined />} className="float-right">
                   <Link to='/register' >

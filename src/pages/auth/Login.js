@@ -14,14 +14,13 @@ const Login = ({history}) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
-	const [errors, setError] = useState([]);
 
 	const dispatch = useDispatch()
 	const user = useSelector((state) => state.user)
 
 	useEffect(()=>{
 		user&&user.token&&history.push('/')
-	}, [user])
+	}, [user, history])
 
 	//simple client side validation
 	const isFormValid = () => {

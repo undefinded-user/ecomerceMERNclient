@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { put, takeLatest } from 'redux-saga/effects'
 
 function* userLoggedInSaga(action) {
 	const { history } = action.payload
@@ -55,3 +55,4 @@ function* getLoggedInUserSaga(action) {
 export function* watchGetLoggedInUser(){
 	yield takeLatest('GET_LOGGED_IN_USER_SAGA', getLoggedInUserSaga)
 }
+

@@ -16,8 +16,9 @@ import Header from './components/nav/Header'
 import History from './pages/user/History'
 import WishList from './pages/user/WishList'
 import PasswordUpdate from './pages/user/PasswordUpdate'
+import AdminDashboard from './pages/admin/AdminDashboard'
 import UserRoute from './components/routes/UserRoute'
-
+import AdminRoute from './components/routes/AdminRoute'
  
 function App() {
   const dispatch = useDispatch()
@@ -35,7 +36,7 @@ function App() {
       }
     })
     return () =>unsubscribe()
-  }, [])
+  }, [dispatch])
   return (
     <>
       <ToastContainer />
@@ -55,6 +56,9 @@ function App() {
         <UserRoute exact path='/user/wishlist'>
             <WishList />
         </UserRoute>
+        <AdminRoute exact path='/admin/dashboard'>
+            <AdminDashboard />
+        </AdminRoute>
       </Switch>
     </>
   )

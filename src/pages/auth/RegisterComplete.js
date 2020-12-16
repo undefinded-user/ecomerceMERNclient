@@ -10,7 +10,7 @@ const RegisterComplete = ({ history }) => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [errors, setError] = useState([]);
-	const [isEmailFilled, setIsEmailFilled] = useState(window.localStorage.getItem('emailForSignIn'))
+	const isEmailFilled = window.localStorage.getItem('emailForSignIn')
 	
 	const user = useSelector((state)=>state.user)
 	const dispatch = useDispatch()
@@ -33,7 +33,7 @@ const RegisterComplete = ({ history }) => {
 		// Get the email if available. This should be available if the user completes
 		// the flow on the same device where they started it.
 	 	
-	}, [user])
+	}, [user, history])
 	
 	useEffect(()=>{
 		if (!isEmailFilled) {
@@ -43,7 +43,7 @@ const RegisterComplete = ({ history }) => {
 	  	} else {
 	  		setEmail(window.localStorage.getItem('emailForSignIn'))
 	  	}
-	}, [])
+	}, [isEmailFilled])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()

@@ -27,7 +27,7 @@ const PasswordUpdate = () => {
 		try{
 			const { email } = await auth.currentUser
 			// check previose password
-			const user = await auth.signInWithEmailAndPassword(email, prevPassword)
+			await auth.signInWithEmailAndPassword(email, prevPassword)
 			if(isPasswordValid() === true) {
 				await auth.currentUser.updatePassword(password)
 				toast.success("Password updated")
