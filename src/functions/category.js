@@ -31,3 +31,7 @@ export const removeCategory = async (slug, authtoken) => {
 		}
 	})
 }
+
+export const getParentSubs = async (_id) => {
+	return await axios.get(`${process.env.REACT_APP_API}/category/subs/${_id}`)
+}
