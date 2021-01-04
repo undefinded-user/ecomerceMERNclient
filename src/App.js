@@ -19,6 +19,14 @@ import PasswordUpdate from './pages/user/PasswordUpdate'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import UserRoute from './components/routes/UserRoute'
 import AdminRoute from './components/routes/AdminRoute'
+import CategoryCreate from './pages/admin/category/CategoryCreate'
+import CategoryUpdate from './pages/admin/category/CategoryUpdate'
+import SubCreate from './pages/admin/sub/SubCreate'
+import SubUpdate from './pages/admin/sub/SubUpdate'
+import ProductCreate from './pages/admin/product/ProductCreate'
+import ProductsList from './pages/admin/product/ProductsList'
+ 
+
  
 function App() {
   const dispatch = useDispatch()
@@ -47,18 +55,16 @@ function App() {
         <Route exact path='/register' component={Register}/>
         <Route exact path='/register/complete' component={RegisterComplete}/>
         <Route exact path='/forgot/password' component={ForgotPassword}/>
-        <UserRoute exact path='/user/history'>
-            <History />
-        </UserRoute>
-        <UserRoute exact path='/user/password'>
-            <PasswordUpdate />  
-        </UserRoute>
-        <UserRoute exact path='/user/wishlist'>
-            <WishList />
-        </UserRoute>
-        <AdminRoute exact path='/admin/dashboard'>
-            <AdminDashboard />
-        </AdminRoute>
+        <UserRoute exact path='/user/history' component={History} />
+        <UserRoute exact path='/user/password' component={PasswordUpdate} />
+        <UserRoute exact path='/user/wishlist' component={WishList} />
+        <AdminRoute exact path='/admin/dashboard' component={AdminDashboard} />
+        <AdminRoute exact path='/admin/category' component={CategoryCreate} />
+        <AdminRoute exact path='/admin/category/:slug' component={CategoryUpdate} />
+        <AdminRoute exact path='/admin/sub' component={SubCreate} />
+        <AdminRoute exact path='/admin/sub/:slug' component={SubUpdate} />
+        <AdminRoute exact path='/admin/product' component={ProductCreate} />
+        <AdminRoute exact path='/admin/products' component={ProductsList} />
       </Switch>
     </>
   )
