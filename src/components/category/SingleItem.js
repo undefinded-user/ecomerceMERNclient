@@ -6,20 +6,19 @@ import {toast} from 'react-toastify'
 
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 
-import {removeCategory, getCategories} from '../../functions/category'
 
 
-const CategoryItem = ({category, setCategories}) => {
+const SingleItem = ({item, setItems, removeItem, getItems, linkTo}) => {
 	const [showConfirmation, setShowConfirmation] = useState(false)
 	const user = useSelector((state) => state.user)
 
 	const handleRemove = async() => {
 		try{
 			setShowConfirmation(false)
-			const deleted = await removeCategory(category.slug, user.token)
+			const deleted = await removeItem(item.slug, user.token)
 			toast.success(`${deleted.data.name} is deleted`)
-			const categories = await getCategories()
-			setCategories(categories.data)
+			const items = await getItems()
+			setItems(items.data)
 
 		} catch(error) {
 			console.log(error)
@@ -31,7 +30,7 @@ const CategoryItem = ({category, setCategories}) => {
 	const renderConfirmation = () => {
 		return (
 			<div className='col-md-auto'>
-					<p>Delete "{category.name}" category?</p>
+					<p>Delete "{item.name}"?</p>
 				<div className='row justify-content-center'>
 					<button onClick={handleRemove} className='btn btn-small btn-danger col-md-auto'>Yes</button>
 					<button onClick={()=>setShowConfirmation(false)} className='btn btn-slmall btn-secondary col-md-auto'>Cancel</button>
@@ -45,11 +44,11 @@ const CategoryItem = ({category, setCategories}) => {
 		<div className='container' >
 			<div className='row'>
 				<div className='col alert alert-secondary' >
-					{category.name} 
+					{item.name} 
 					<span className='btn btn-small float-right' onClick={()=>setShowConfirmation(true)}>
 						<DeleteOutlined className='text-danger' />
 					</span>
-					<Link to={`/admin/category/${category.slug}`}>
+					<Link to={`/admin/${linkTo}/${item.slug}`}>
 						<span className='btn btn-small float-right'>
 							<EditOutlined className='text-warning'/>
 						</span>
@@ -63,4 +62,4 @@ const CategoryItem = ({category, setCategories}) => {
 	)
 }
 
-export default CategoryItem
+export default SingleItem
