@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import AdminNav from '../../../components/nav/AdminNav'
-import CategoryItem from '../../../components/category/CategoryItem'
+import SingleItem from '../../../components/category/SingleItem'
 import CategoryForm from '../../../components/forms/CategoryForm'
 import LocalSearch from '../../../components/forms/LocalSearch'
 
 import {toast} from 'react-toastify'
 
-import {createCategory, getCategories} from '../../../functions/category.js'
+import {createCategory, getCategories, removeCategory} from '../../../functions/category.js'
 
 
 const CategoryCreate = () => {
@@ -54,7 +54,18 @@ const CategoryCreate = () => {
 					<CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} btnText='Create' />
 					<LocalSearch kewWord={keyWord} setKeyWord={setKeyWord} />
 					<hr />
-					{categories.filter(searched(keyWord)).map((category) => <CategoryItem  setCategories={setCategories} category={category} key={category._id}/>)}
+					{categories.filter(searched(keyWord)).map((category) =>{
+						return(
+							<SingleItem
+									item={category}
+									setItems={setCategories}
+									getItems={getCategories}
+									removeItem={removeCategory}
+									linkTo='category'
+									key={category._id}
+							/>
+						)
+					})}
 				</div>
 			</div>
 		</div>
