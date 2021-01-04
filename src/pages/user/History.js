@@ -5,8 +5,12 @@ const History = () => {
 	return (
 		<div className='container-fluid'>
 			<div className='row'>
-				<div className='colmd-2'><UserNav /></div>
-				<div className='col'>User history</div>
+				<div className='col-md-2'>
+					<UserNav />
+				</div>
+				<div className='col'>
+					User history
+				</div>
 			</div>
 		</div>
 	)
