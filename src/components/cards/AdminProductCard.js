@@ -1,14 +1,29 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import defaultImg from '../../images/4-devices-2.png'
 
-import {Card} from 'antd';
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import {Card, Popover} from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 const { Meta } = Card
 
 
-const AdminProductCard = ({product}) => {
-	const {title, description, images} = product
+
+
+const AdminProductCard = ({product, handleRemove}) => {
+	const [visible, setVisible] = useState(false)
+	const {title, description, images, slug} = product
+	const popupContent = () => {
+		return(
+			<div className='row'>
+				<div className='col text-center'>
+					<a className='text-danger' onClick={()=>handleRemove(slug)}>Yes</a>
+				</div>
+				<div className='col text-center'>
+					<a className='text-primary' onClick={()=>setVisible(false)}>Cancel</a>
+				</div>
+			</div>
+		)
+	}
 	return (
 		 <Card
 		    cover={
@@ -19,15 +34,23 @@ const AdminProductCard = ({product}) => {
 		        src={images.length? images[0].url : defaultImg}
 		      />
 		    }
-		    // actions={[
-		    //   <SettingOutlined key="setting" />,
-		    //   <EditOutlined key="edit" />,
-		    //   <EllipsisOutlined key="ellipsis" />,
-		    // ]}
+		    actions={[
+		      <EditOutlined className='text-warning'/>,
+		      <Popover
+		      	placement='topRight'
+		      	content={popupContent()}
+		      	title={`Delete "${title}"`}
+		      	trigger='click'
+		      	visible={visible}
+		      	onVisibleChange={(visible)=>setVisible(visible)}   	 
+		      >
+		      	<DeleteOutlined className='text-danger' />
+		      </Popover>
+		    ]}
 		  >
 		    <Meta
 		      title={title}
-		      description={description}
+		      description={`${description&&description.substring(0, 40)}...`}
 		    />
 		  </Card>
 	)
