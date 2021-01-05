@@ -2,11 +2,16 @@ import React, {useState, useEffect} from 'react'
 import AdminNav from '../../../components/nav/AdminNav'
 import AdminProductCard from '../../../components/cards/AdminProductCard'
 
-import {getProducts} from '../../../functions/product'
+import {useSelector} from 'react-redux'
 
-const AdminDashboard = () => {
+import {getProducts, removeProduct} from '../../../functions/product'
+
+import {toast} from 'react-toastify'
+
+const ProductList = () => {
 	const [products, setProducts] = useState([])
 	const [isLoading, setIsLoading] = useState(false)
+	const token = useSelector((state) => state.user.token)
 
 	useEffect(()=>{
 		loadProducts(5)
@@ -24,6 +29,16 @@ const AdminDashboard = () => {
 		}
 	}
 
+	const handleRemove = async (slug) => {
+		try{
+			const deleted = await removeProduct(slug, token)
+			loadProducts()
+			toast.success(`${deleted.data.title} is deleted successfully`)
+
+		} catch(error) {
+			if(error.response.status === 400) toast.error(error.response.data)
+		}
+	}
 
 	return (
 		<div className='container-fluid'>
@@ -36,7 +51,7 @@ const AdminDashboard = () => {
 					<div className='row'>						
 							{products.map((product) =>(
 								<div className='col-md-4'>
-									<AdminProductCard product={product} key={product._id}/>
+									<AdminProductCard product={product} handleRemove={handleRemove} key={product._id}/>
 								</div>)
 							)}
 					</div>
@@ -46,4 +61,4 @@ const AdminDashboard = () => {
 	)
 }
 
-export default AdminDashboard
+export default ProductList
