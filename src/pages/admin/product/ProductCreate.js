@@ -96,7 +96,6 @@ const ProductCreate = () => {
 		}
 		
 	}	
-	console.log(product)
 	// const searched = (keyWord) => (category) => category.name.toLowerCase().includes(keyWord)
 	return (
 		<div className='container-fluid'>
