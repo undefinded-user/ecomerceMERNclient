@@ -64,7 +64,6 @@ const ProductForm = ({product, handleChange, handleSubmit, setProduct}) => {
 										</Select>
 									</div>
 								</div>)}
-				{JSON.stringify(product.subs)}
 			</div>
 			<div className="row mb-3">
 				<div className='col-sm-6'>
