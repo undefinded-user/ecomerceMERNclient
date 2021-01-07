@@ -17,7 +17,7 @@ export const createProduct = async (authtoken, info) => {
 }
 
 export const updateProduct = async (slug, authtoken, product) => {
-	return await axios.put(`${process.env.REACT_APP_API}/product/${slug}`, product, {
+	return await axios.put(`${process.env.REACT_APP_API}/product/${slug}`, {product}, {
 		headers: {
 			authtoken
 		}
