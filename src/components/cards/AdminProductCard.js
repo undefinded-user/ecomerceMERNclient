@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 
+import {Link} from 'react-router-dom'
+
 import defaultImg from '../../images/4-devices-2.png'
 
 import {Card, Popover} from 'antd';
@@ -10,20 +12,35 @@ const { Meta } = Card
 
 
 const AdminProductCard = ({product, handleRemove}) => {
-	const [visible, setVisible] = useState(false)
+	const [visibleDelete, setVisibleDelete] = useState(false)
+	const [visibleEdit, setVisibleEdit] = useState(false)
 	const {title, description, images, slug} = product
-	const popupContent = () => {
+	const popoverDeleteContent = () => {
 		return(
 			<div className='row'>
 				<div className='col text-center'>
 					<a className='text-danger' onClick={()=>handleRemove(slug)}>Yes</a>
 				</div>
 				<div className='col text-center'>
-					<a className='text-primary' onClick={()=>setVisible(false)}>Cancel</a>
+					<a className='text-primary' onClick={()=>setVisibleDelete(false)}>Cancel</a>
 				</div>
 			</div>
 		)
 	}
+
+	const popoverEditContent = () => {
+		return(
+			<div className='row'>
+				<div className='col text-center'>
+					<Link to={`/admin/product/${slug}`} className='text-danger'>Yes</Link>
+				</div>
+				<div className='col text-center'>
+					<a className='text-primary' onClick={()=>setVisibleEdit(false)}>Cancel</a>
+				</div>
+			</div>
+		)
+	}
+
 	return (
 		 <Card
 		    cover={
@@ -35,17 +52,27 @@ const AdminProductCard = ({product, handleRemove}) => {
 		      />
 		    }
 		    actions={[
-		      <EditOutlined className='text-warning'/>,
-		      <Popover
-		      	placement='topRight'
-		      	content={popupContent()}
-		      	title={`Delete "${title}"`}
-		      	trigger='click'
-		      	visible={visible}
-		      	onVisibleChange={(visible)=>setVisible(visible)}   	 
-		      >
-		      	<DeleteOutlined className='text-danger' />
-		      </Popover>
+		    	<Popover
+			      	placement='top'
+			      	content={popoverEditContent()}
+			      	title={`Edit "${title}"`}
+			      	trigger='click'
+			      	visible={visibleEdit}
+			      	onVisibleChange={(visible)=>setVisibleEdit(visible)}   	 
+		    	>
+	    			<EditOutlined className='text-warning'/>
+		    	</Popover>
+				,
+		    	<Popover
+			      	placement='top'
+			      	content={popoverDeleteContent()}
+			      	title={`Delete "${title}"`}
+			      	trigger='click'
+			      	visible={visibleDelete}
+			      	onVisibleChange={(visible)=>setVisibleDelete(visible)}   	 
+		    	>
+		      		<DeleteOutlined className='text-danger' />
+		    	</Popover>
 		    ]}
 		  >
 		    <Meta
