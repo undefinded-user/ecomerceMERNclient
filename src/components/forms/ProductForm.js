@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import {Select} from 'antd'
 const {Option} = Select
 
-const ProductForm = ({product, handleChange, handleSubmit, setProduct}) => {
+const ProductForm = ({product, handleChange, handleSubmit, setProduct, btnText}) => {
 	return(
 		<form onSubmit={handleSubmit}>
 			<div className='form-group'>
@@ -142,7 +142,7 @@ const ProductForm = ({product, handleChange, handleSubmit, setProduct}) => {
 				</div>
 			</div>
 			
-			<button className='btn btn-outline-info'>Create</button>
+			<button className='btn btn-outline-info'>{btnText? btnText : 'create'}</button>
 		</form>
 	)
 }
