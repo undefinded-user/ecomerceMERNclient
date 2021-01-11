@@ -7,7 +7,7 @@ const LoadingCard = ({count}) => {
 		const content = []
 		for(let i = 0; i<count; i++){
 			content.push(
-				<div className='col-md-4 p-1'>
+				<div className='col-md-4 p-1' key={i}>
 					<Card>
 						<Skeleton active></Skeleton>
 					</Card >
