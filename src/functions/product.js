@@ -4,16 +4,20 @@ export const getProducts = async (count) => {
 	return await axios.get(`${process.env.REACT_APP_API}/products/${count}`)
 }
 
-export const getSortedProducts = async (sort, order, limit) => {
+export const getSortedProducts = async (sort, order, page) => {
 	return await axios.post(`${process.env.REACT_APP_API}/products/sorted`, {
 		sort,
 		order,
-		limit
+		page
 	})
 }
 
 export const getProduct = async (slug) => {
 	return await axios.get(`${process.env.REACT_APP_API}/product/${slug}`)
+}
+
+export const getPrepopulatedProduct = async (slug) => {
+	return await axios.get(`${process.env.REACT_APP_API}/product/prepopulated/${slug}`)
 }
 
 export const createProduct = async (authtoken, info) => {
@@ -38,4 +42,8 @@ export const removeProduct = async (slug, authtoken) => {
 			authtoken
 		}
 	})
+}
+
+export const getTotal = async () => {
+	return await axios.get(`${process.env.REACT_APP_API}/products/total`)
 }
