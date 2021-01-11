@@ -9,7 +9,7 @@ import {Card} from 'antd'
 const {Meta} = Card
 
 const ProductCard = ({product}) => {
-	const {title, description, images} = product
+	const {title, description, images, slug} = product
 	return (
 		<Card
 			cover={
@@ -22,7 +22,7 @@ const ProductCard = ({product}) => {
 		    }
 
 		    actions={[
-		    		<Link to='/product/slug'>
+		    		<Link to={`/product/${slug}`}>
 	    				<EyeOutlined className='text-warning'/><br/> View product
 	    			</Link>,
 		      		<>
