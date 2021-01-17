@@ -21,10 +21,17 @@ function* userLoggedInSaga(action) {
 						
 
 	yield put({type:'LOGGED_IN_USER', payload})
-	// role based redirection 
-	res.data.role === 'admin'?
-		history.push('/admin/dashboard'):
-		history.push('/user/history')
+
+	// intended redirection
+	let intended = history.location.state
+	if(intended){
+		history.push(intended.from)
+	} else {
+		// role based redirection 
+		res.data.role === 'admin'?
+			history.push('/admin/dashboard'):
+			history.push('/user/history')
+	}
 }
 
 export function* watchUserLoggedIn () {

@@ -19,6 +19,7 @@ const Login = ({history}) => {
 	const user = useSelector((state) => state.user)
 
 	useEffect(()=>{
+		if(history.location.state) return
 		user&&user.token&&history.push('/')
 	}, [user, history])
 
